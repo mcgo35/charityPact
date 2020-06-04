@@ -54,6 +54,7 @@ module.exports = {
     createGroup: async (_, { group }) => {
       const newGroup = await databaseAPI.createGroup({ group });
       const members = await databaseAPI.addMembers({ group }, newGroup.id);
+      console.log('creating')
       return {
         id: newGroup.id,
         groupName: newGroup.group_name,
@@ -66,8 +67,7 @@ module.exports = {
     },
     completeTask: async (_, { userId, groupId }) => {
       await databaseAPI.completeTask({ userId, groupId });
-      const groups = await databaseAPI.getGroups({ userId });
-      console.log(groups)
+      const groups = await databaseAPI.getGroups({ userId });      
       const groupIds = [];
       groups.forEach((group) => groupIds.push(group.id));
       const members = await databaseAPI.getMembers(groupIds);
